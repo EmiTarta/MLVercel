@@ -6,6 +6,7 @@ import io
 import os
 import tempfile
 import numpy as np
+import joblib
 
 # Configura un directorio temporal para Matplotlib
 os.environ['MPLCONFIGDIR'] = tempfile.mkdtemp()
@@ -22,11 +23,10 @@ app.config["DEBUG"] = False
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construye la ruta al archivo del modelo
-model_path = os.path.join(current_dir, "titanic_model.pkl")
+model_path = os.path.join(current_dir, "titanic_model.joblib")
 
-# Cargar el modelo entrenado
-with open(model_path, "rb") as f:
-    model = pickle.load(f)
+# Cargar el modelo
+model = joblib.load(model_path)
 
 # Inicializar la base de datos
 def init_db():
