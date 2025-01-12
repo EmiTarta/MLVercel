@@ -4,6 +4,9 @@ import pickle
 import datetime
 import pandas as pd
 import sqlite3
+import matplotlib
+# Usar un backend que no requiera interacción con el sistema de archivos ni una interfaz gráfica
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import io
 
