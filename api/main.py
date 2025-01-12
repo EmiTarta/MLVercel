@@ -4,11 +4,13 @@ import pickle
 import datetime
 import pandas as pd
 import sqlite3
+import io
+# Deshabilitar acceso a ~/.config/matplotlib
+os.environ["MPLCONFIGDIR"] = os.devnull
 import matplotlib
 # Usar un backend que no requiera interacción con el sistema de archivos ni una interfaz gráfica
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import io
 
 # Directorio base del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
