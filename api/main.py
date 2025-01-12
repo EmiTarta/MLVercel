@@ -8,26 +8,17 @@ import io
 import tempfile
 import matplotlib
 # Configurar un directorio temporal para matplotlib
-temp_dir = tempfile.mkdtemp()
-os.environ["MPLCONFIGDIR"] = temp_dir
+temp_dir = tempfile.TemporaryDirectory()
+os.environ["MPLCONFIGDIR"] = temp_dir.name
 # Usar el backend "Agg" para evitar dependencias gráficas
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-
-# Directorio base del proyecto
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Ruta a la base de datos
-DB_PATH = os.path.join(BASE_DIR, "predictions.db")
-
-# Ruta al modelo
-MODEL_PATH = os.path.join(BASE_DIR, "titanic_model.pkl")
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["DEBUG"] = False
 
 # Cargar el modelo entrenado
-with open(MODEL_PATH, "rb") as f:
+with open("titanic_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Inicializar la base de datos
@@ -35,7 +26,8 @@ def init_db():
     """
     Crea la base de datos y la tabla 'predictions' si no existe.
     """
-    connection = sqlite3.connect(DB_PATH)
+    connection = sqlite3.connect("predictions.db")
+
     crsr = connection.cursor()
     query = '''
         CREATE TABLE IF NOT EXISTS predictions (
@@ -71,7 +63,7 @@ def predict():
 
         # Guardar en la base de datos
         timestamp = datetime.datetime.now().isoformat()
-        connection = sqlite3.connect(DB_PATH)
+        connection = sqlite3.connect("predictions.db")
         crsr = connection.cursor()
         query = '''
             INSERT INTO predictions (Pclass, Sex, Age, prediction, timestamp)
@@ -91,7 +83,7 @@ def records():
     Endpoint que devuelve todos los registros guardados en la base de datos.
     """
     try:
-        connection = sqlite3.connect(DB_PATH)
+        connection = sqlite3.connect("predictions.db")
         crsr = connection.cursor()
         query = 'SELECT * FROM predictions'
         crsr.execute(query)
@@ -113,7 +105,7 @@ def grafica():
     Endpoint que genera un gráfico en matplotlib y lo devuelve.
     """
     try:
-        connection = sqlite3.connect(DB_PATH)
+        connection = sqlite3.connect("predictions.db")
         crsr = connection.cursor()
         query = 'SELECT prediction FROM predictions'
         crsr.execute(query)
