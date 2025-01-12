@@ -7,7 +7,8 @@ import io
 import os
 import matplotlib
 import matplotlib.pyplot as plt
-
+print("Archivos disponibles en el directorio actual:")
+print(os.listdir("."))
 # Desactiva la caché de matplotlib configurando un directorio temporal
 os.environ["MPLCONFIGDIR"] = "/tmp"
 
