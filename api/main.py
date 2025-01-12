@@ -5,10 +5,12 @@ import datetime
 import pandas as pd
 import sqlite3
 import io
-# Deshabilitar acceso a ~/.config/matplotlib
-os.environ["MPLCONFIGDIR"] = os.devnull
+import tempfile
 import matplotlib
-# Usar un backend que no requiera interacción con el sistema de archivos ni una interfaz gráfica
+# Configurar un directorio temporal para matplotlib
+temp_dir = tempfile.mkdtemp()
+os.environ["MPLCONFIGDIR"] = temp_dir
+# Usar el backend "Agg" para evitar dependencias gráficas
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
