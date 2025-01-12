@@ -5,15 +5,15 @@ import pandas as pd
 import sqlite3
 import io
 import os
-import matplotlib
-import matplotlib.pyplot as plt
-print("Archivos disponibles en el directorio actual:")
-print(os.listdir("."))
-# Desactiva la caché de matplotlib configurando un directorio temporal
-os.environ["MPLCONFIGDIR"] = "/tmp"
+import tempfile
 
-# Configura el backend "Agg" para evitar dependencias gráficas
-matplotlib.use("Agg")
+# Configura un directorio temporal para Matplotlib
+os.environ['MPLCONFIGDIR'] = tempfile.mkdtemp()
+
+# Importa matplotlib después de configurar MPLCONFIGDIR
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["DEBUG"] = False
