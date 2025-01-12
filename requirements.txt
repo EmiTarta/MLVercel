@@ -1,4 +1,3 @@
-Flask
+flask
 pandas
-sqlalchemy
 matplotlib

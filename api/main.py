@@ -18,8 +18,14 @@ matplotlib.use("Agg")
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["DEBUG"] = False
 
+# Obtén la ruta del directorio actual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construye la ruta al archivo del modelo
+model_path = os.path.join(current_dir, "titanic_model.pkl")
+
 # Cargar el modelo entrenado
-with open("titanic_model.pkl", "rb") as f:
+with open(model_path, "rb") as f:
     model = pickle.load(f)
 
 # Inicializar la base de datos
