@@ -12,14 +12,14 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["DEBUG"] = False 
 
 # Cargar el modelo entrenado
-with open("titanic_model.pkl", "rb") as f:
+with open("../titanic_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Inicializar la base de datos
 def init_db():
     # Conectar a la base de datos y crear la tabla 'predictions' si no existe
     # Completa aquí: conexión SQLite y creación de tabla con campos (inputs, prediction, timestamp)
-    connection = sqlite3.connect("predictions.db")  
+    connection = sqlite3.connect("../predictions.db")  
     crsr = connection.cursor()
     query  = '''
         CREATE TABLE IF NOT EXISTS predictions (
@@ -51,7 +51,7 @@ def predict():
 
         # 3. Guardar en la base de datos
         timestamp = datetime.datetime.now().isoformat()
-        connection = sqlite3.connect("predictions.db")
+        connection = sqlite3.connect("../predictions.db")
         crsr = connection.cursor()
         # Completa aquí: inserta los datos (inputs, predicción, timestamp) en la base de datos
         query = '''
@@ -73,7 +73,7 @@ def records():
     try:
         # Conectar a la base de datos y recuperar los registros
         # Completa aquí: conexión SQLite y lectura de registros
-        connection = sqlite3.connect("predictions.db")
+        connection = sqlite3.connect("../predictions.db")
         crsr = connection.cursor()
         records = []  # Sustituir por los datos recuperados de la base de datos
         query = '''SELECT * FROM "predictions"'''
@@ -97,7 +97,7 @@ def grafica():
     Endpoint que que genera una grafica en matplotlib y la devuelve.
     """
     try:
-        connection = sqlite3.connect("predictions.db")
+        connection = sqlite3.connect("../predictions.db")
         crsr = connection.cursor()
         query = ''' SELECT prediction FROM predictions'''
         crsr.execute(query)
