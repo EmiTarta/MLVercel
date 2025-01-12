@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify, render_template, Response
 import pickle
 import datetime
-import pandas as pd
 import sqlite3
 import io
 import os
 import tempfile
+import numpy as np
 
 # Configura un directorio temporal para Matplotlib
 os.environ['MPLCONFIGDIR'] = tempfile.mkdtemp()
