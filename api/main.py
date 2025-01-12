@@ -1,18 +1,18 @@
-import os
 from flask import Flask, request, jsonify, render_template, Response
 import pickle
 import datetime
 import pandas as pd
 import sqlite3
 import io
-import tempfile
+import os
 import matplotlib
-# Configurar un directorio temporal para matplotlib
-temp_dir = tempfile.TemporaryDirectory()
-os.environ["MPLCONFIGDIR"] = temp_dir.name
-# Usar el backend "Agg" para evitar dependencias gráficas
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+# Desactiva la caché de matplotlib configurando un directorio temporal
+os.environ["MPLCONFIGDIR"] = "/tmp"
+
+# Configura el backend "Agg" para evitar dependencias gráficas
+matplotlib.use("Agg")
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["DEBUG"] = False

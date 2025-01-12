@@ -1,14 +1,23 @@
 {
     "builds": [
-        {
-            "src": "api/main.py",
-            "use": "@vercel/python"
-        }
+      {
+        "src": "api/main.py",
+        "use": "@vercel/python"
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "api/main.py"
-        }
-    ]
-}
+      {
+        "src": "/(.*)",
+        "dest": "api/main.py"
+      }
+    ],
+    "functions": {
+      "api/main.py": {
+        "includeFiles": [
+          "api/titanic_model.pkl",
+          "api/predictions.db"
+        ]
+      }
+    }
+  }
+  
